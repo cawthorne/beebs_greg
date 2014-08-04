@@ -28,11 +28,8 @@ sqrt_small_SOURCES=sqrt.c
 include $(top_srcdir)/src/common.mk.am
 
 sqrt_SOURCES += ${platform_src}
-
-
 sqrt_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
 sqrt_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
 
 sqrt_large_SOURCES += ${platform_src}
 sqrt_small_SOURCES += ${platform_src}
-

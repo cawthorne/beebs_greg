@@ -123,7 +123,7 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = arm-none-eabi
 target_triplet = arm-none-eabi
-bin_PROGRAMS = bs$(EXEEXT)
+bin_PROGRAMS = bs$(EXEEXT) bs_small$(EXEEXT) bs_large$(EXEEXT)
 DIST_COMMON = $(top_srcdir)/src/common.mk.am $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/build-aux/depcomp
 am__append_1 = $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
@@ -153,6 +153,28 @@ AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am__bs_large_SOURCES_DIST = bs.c \
+	$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c \
+	$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+am__objects_3 = bs_large-chipsupport.$(OBJEXT)
+am__objects_4 = bs_large-boardsupport.$(OBJEXT) $(am__objects_3)
+am_bs_large_OBJECTS = bs_large-bs.$(OBJEXT) $(am__objects_4)
+bs_large_OBJECTS = $(am_bs_large_OBJECTS)
+bs_large_LDADD = $(LDADD)
+bs_large_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(bs_large_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am__bs_small_SOURCES_DIST = bs.c \
+	$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c \
+	$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+am__objects_5 = bs_small-chipsupport.$(OBJEXT)
+am__objects_6 = bs_small-boardsupport.$(OBJEXT) $(am__objects_5)
+am_bs_small_OBJECTS = bs_small-bs.$(OBJEXT) $(am__objects_6)
+bs_small_OBJECTS = $(am_bs_small_OBJECTS)
+bs_small_LDADD = $(LDADD)
+bs_small_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(bs_small_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -187,8 +209,9 @@ AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(bs_SOURCES)
-DIST_SOURCES = $(am__bs_SOURCES_DIST)
+SOURCES = $(bs_SOURCES) $(bs_large_SOURCES) $(bs_small_SOURCES)
+DIST_SOURCES = $(am__bs_SOURCES_DIST) $(am__bs_large_SOURCES_DIST) \
+	$(am__bs_small_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -344,6 +367,8 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../../..
 bs_SOURCES = bs.c ${platform_src}
+bs_small_SOURCES = bs.c ${platform_src}
+bs_large_SOURCES = bs.c ${platform_src}
 platform_src =  \
 	$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c \
 	$(am__append_1)
@@ -351,6 +376,8 @@ AM_CFLAGS = -I $(top_srcdir)/include \
 		  -I $(top_srcdir)/config/arm/boards/stm32f0discovery/ \
 		  -I $(top_srcdir)/config/arm/chips/stm32f051/
 
+bs_large_CFLAGS = -DLARGE_D $(AM_CFLAGS)
+bs_small_CFLAGS = -DSMALL_D $(AM_CFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -440,6 +467,14 @@ bs$(EXEEXT): $(bs_OBJECTS) $(bs_DEPENDENCIES) $(EXTRA_bs_DEPENDENCIES)
 	@rm -f bs$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(bs_OBJECTS) $(bs_LDADD) $(LIBS)
 
+bs_large$(EXEEXT): $(bs_large_OBJECTS) $(bs_large_DEPENDENCIES) $(EXTRA_bs_large_DEPENDENCIES) 
+	@rm -f bs_large$(EXEEXT)
+	$(AM_V_CCLD)$(bs_large_LINK) $(bs_large_OBJECTS) $(bs_large_LDADD) $(LIBS)
+
+bs_small$(EXEEXT): $(bs_small_OBJECTS) $(bs_small_DEPENDENCIES) $(EXTRA_bs_small_DEPENDENCIES) 
+	@rm -f bs_small$(EXEEXT)
+	$(AM_V_CCLD)$(bs_small_LINK) $(bs_small_OBJECTS) $(bs_small_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -448,6 +483,12 @@ distclean-compile:
 
 include ./$(DEPDIR)/boardsupport.Po
 include ./$(DEPDIR)/bs.Po
+include ./$(DEPDIR)/bs_large-boardsupport.Po
+include ./$(DEPDIR)/bs_large-bs.Po
+include ./$(DEPDIR)/bs_large-chipsupport.Po
+include ./$(DEPDIR)/bs_small-boardsupport.Po
+include ./$(DEPDIR)/bs_small-bs.Po
+include ./$(DEPDIR)/bs_small-chipsupport.Po
 include ./$(DEPDIR)/chipsupport.Po
 
 .c.o:
@@ -498,6 +539,90 @@ chipsupport.obj: $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
 #	$(AM_V_CC)source='$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' object='chipsupport.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o chipsupport.obj `if test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; fi`
+
+bs_large-bs.o: bs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-bs.o -MD -MP -MF $(DEPDIR)/bs_large-bs.Tpo -c -o bs_large-bs.o `test -f 'bs.c' || echo '$(srcdir)/'`bs.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-bs.Tpo $(DEPDIR)/bs_large-bs.Po
+#	$(AM_V_CC)source='bs.c' object='bs_large-bs.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-bs.o `test -f 'bs.c' || echo '$(srcdir)/'`bs.c
+
+bs_large-bs.obj: bs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-bs.obj -MD -MP -MF $(DEPDIR)/bs_large-bs.Tpo -c -o bs_large-bs.obj `if test -f 'bs.c'; then $(CYGPATH_W) 'bs.c'; else $(CYGPATH_W) '$(srcdir)/bs.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-bs.Tpo $(DEPDIR)/bs_large-bs.Po
+#	$(AM_V_CC)source='bs.c' object='bs_large-bs.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-bs.obj `if test -f 'bs.c'; then $(CYGPATH_W) 'bs.c'; else $(CYGPATH_W) '$(srcdir)/bs.c'; fi`
+
+bs_large-boardsupport.o: $(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-boardsupport.o -MD -MP -MF $(DEPDIR)/bs_large-boardsupport.Tpo -c -o bs_large-boardsupport.o `test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-boardsupport.Tpo $(DEPDIR)/bs_large-boardsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' object='bs_large-boardsupport.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-boardsupport.o `test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+
+bs_large-boardsupport.obj: $(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-boardsupport.obj -MD -MP -MF $(DEPDIR)/bs_large-boardsupport.Tpo -c -o bs_large-boardsupport.obj `if test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-boardsupport.Tpo $(DEPDIR)/bs_large-boardsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' object='bs_large-boardsupport.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-boardsupport.obj `if test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; fi`
+
+bs_large-chipsupport.o: $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-chipsupport.o -MD -MP -MF $(DEPDIR)/bs_large-chipsupport.Tpo -c -o bs_large-chipsupport.o `test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-chipsupport.Tpo $(DEPDIR)/bs_large-chipsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' object='bs_large-chipsupport.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-chipsupport.o `test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+
+bs_large-chipsupport.obj: $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -MT bs_large-chipsupport.obj -MD -MP -MF $(DEPDIR)/bs_large-chipsupport.Tpo -c -o bs_large-chipsupport.obj `if test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_large-chipsupport.Tpo $(DEPDIR)/bs_large-chipsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' object='bs_large-chipsupport.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_large_CFLAGS) $(CFLAGS) -c -o bs_large-chipsupport.obj `if test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; fi`
+
+bs_small-bs.o: bs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-bs.o -MD -MP -MF $(DEPDIR)/bs_small-bs.Tpo -c -o bs_small-bs.o `test -f 'bs.c' || echo '$(srcdir)/'`bs.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-bs.Tpo $(DEPDIR)/bs_small-bs.Po
+#	$(AM_V_CC)source='bs.c' object='bs_small-bs.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-bs.o `test -f 'bs.c' || echo '$(srcdir)/'`bs.c
+
+bs_small-bs.obj: bs.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-bs.obj -MD -MP -MF $(DEPDIR)/bs_small-bs.Tpo -c -o bs_small-bs.obj `if test -f 'bs.c'; then $(CYGPATH_W) 'bs.c'; else $(CYGPATH_W) '$(srcdir)/bs.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-bs.Tpo $(DEPDIR)/bs_small-bs.Po
+#	$(AM_V_CC)source='bs.c' object='bs_small-bs.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-bs.obj `if test -f 'bs.c'; then $(CYGPATH_W) 'bs.c'; else $(CYGPATH_W) '$(srcdir)/bs.c'; fi`
+
+bs_small-boardsupport.o: $(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-boardsupport.o -MD -MP -MF $(DEPDIR)/bs_small-boardsupport.Tpo -c -o bs_small-boardsupport.o `test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-boardsupport.Tpo $(DEPDIR)/bs_small-boardsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' object='bs_small-boardsupport.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-boardsupport.o `test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+
+bs_small-boardsupport.obj: $(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-boardsupport.obj -MD -MP -MF $(DEPDIR)/bs_small-boardsupport.Tpo -c -o bs_small-boardsupport.obj `if test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-boardsupport.Tpo $(DEPDIR)/bs_small-boardsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c' object='bs_small-boardsupport.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-boardsupport.obj `if test -f '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/boards/stm32f0discovery/boardsupport.c'; fi`
+
+bs_small-chipsupport.o: $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-chipsupport.o -MD -MP -MF $(DEPDIR)/bs_small-chipsupport.Tpo -c -o bs_small-chipsupport.o `test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-chipsupport.Tpo $(DEPDIR)/bs_small-chipsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' object='bs_small-chipsupport.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-chipsupport.o `test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+
+bs_small-chipsupport.obj: $(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -MT bs_small-chipsupport.obj -MD -MP -MF $(DEPDIR)/bs_small-chipsupport.Tpo -c -o bs_small-chipsupport.obj `if test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/bs_small-chipsupport.Tpo $(DEPDIR)/bs_small-chipsupport.Po
+#	$(AM_V_CC)source='$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c' object='bs_small-chipsupport.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(bs_small_CFLAGS) $(CFLAGS) -c -o bs_small-chipsupport.obj `if test -f '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/arm/chips/stm32f051/chipsupport.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

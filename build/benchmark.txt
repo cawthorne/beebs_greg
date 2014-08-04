@@ -1,257 +1,265 @@
-Benchmarks for Mon Aug 4 14:28:55 UTC 2014
+Benchmarks for Mon Aug 4 15:05:56 UTC 2014
 src/2dfir small
-Energy:             1.216 mJ
-Time:             150.119 ms
-Power:              8.099 mW
-Average current:    2.687 mA
-Average voltage:    3.014 V
+Energy:             1.241 mJ
+Time:             150.083 ms
+Power:              8.268 mW
+Average current:    2.695 mA
+Average voltage:    3.068 V
 
 src/2dfir medium
-Energy:             7.960 mJ
-Time:             991.024 ms
-Power:              8.032 mW
-Average current:    2.666 mA
-Average voltage:    3.013 V
+Energy:             8.175 mJ
+Time:             990.726 ms
+Power:              8.251 mW
+Average current:    2.692 mA
+Average voltage:    3.065 V
 
 src/2dfir large
-Energy:            31.494 mJ
-Time:               4.055 s
-Power:              7.766 mW
-Average current:    2.577 mA
-Average voltage:    3.014 V
+Energy:            32.054 mJ
+Time:               4.054 s
+Power:              7.906 mW
+Average current:    2.579 mA
+Average voltage:    3.066 V
 
 src/bs small
-Error: File "src/bs/bs_small" does not exist
+Energy:           985.200 uJ
+Time:             124.119 ms
+Power:              7.938 mW
+Average current:    2.592 mA
+Average voltage:    3.063 V
 
 src/bs medium
-Energy:           425.136 uJ
-Time:              51.381 ms
-Power:              8.274 mW
-Average current:    2.745 mA
-Average voltage:    3.014 V
+Energy:           415.902 uJ
+Time:              51.369 ms
+Power:              8.096 mW
+Average current:    2.643 mA
+Average voltage:    3.063 V
 
 src/bs large
-Error: File "src/bs/bs_large" does not exist
+Energy:           415.843 uJ
+Time:              51.381 ms
+Power:              8.093 mW
+Average current:    2.645 mA
+Average voltage:    3.060 V
 
 src/bubblesort small
-Energy:            11.496 mJ
+Energy:            12.213 mJ
 Time:               1.452 s
-Power:              7.915 mW
-Average current:    2.627 mA
-Average voltage:    3.013 V
+Power:              8.410 mW
+Average current:    2.744 mA
+Average voltage:    3.065 V
 
 src/bubblesort medium
-Energy:            68.339 mJ
-Time:               8.537 s
-Power:              8.005 mW
-Average current:    2.658 mA
-Average voltage:    3.012 V
+Energy:            69.899 mJ
+Time:               8.536 s
+Power:              8.189 mW
+Average current:    2.674 mA
+Average voltage:    3.062 V
 
 src/bubblesort large
-Energy:           421.152 mJ
-Time:              52.210 s
-Power:              8.066 mW
-Average current:    2.677 mA
-Average voltage:    3.013 V
+Energy:           431.794 mJ
+Time:              52.201 s
+Power:              8.272 mW
+Average current:    2.700 mA
+Average voltage:    3.064 V
 
 src/cnt small
-Energy:             6.355 uJ
-Time:             642.857 us
-Power:              9.885 mW
-Average current:    3.281 mA
-Average voltage:    3.012 V
+Energy:             5.401 uJ
+Time:             630.952 us
+Power:              8.560 mW
+Average current:    2.793 mA
+Average voltage:    3.064 V
 
 src/cnt medium
-Energy:            28.231 uJ
+Energy:            27.467 uJ
 Time:               3.357 ms
-Power:              8.409 mW
-Average current:    2.792 mA
-Average voltage:    3.012 V
+Power:              8.182 mW
+Average current:    2.669 mA
+Average voltage:    3.066 V
 
 src/cnt large
-Energy:           110.675 uJ
+Energy:           112.628 uJ
 Time:              13.012 ms
-Power:              8.506 mW
+Power:              8.656 mW
 Average current:    2.824 mA
-Average voltage:    3.012 V
+Average voltage:    3.065 V
 
 src/dijkstra small
-Energy:           412.258 uJ
-Time:              49.798 ms
-Power:              8.279 mW
-Average current:    2.748 mA
-Average voltage:    3.013 V
+Energy:           421.926 uJ
+Time:              49.786 ms
+Power:              8.475 mW
+Average current:    2.764 mA
+Average voltage:    3.066 V
 
 src/dijkstra medium
-Energy:            86.648 mJ
-Time:              10.705 s
-Power:              8.094 mW
-Average current:    2.687 mA
-Average voltage:    3.013 V
+Energy:            88.947 mJ
+Time:              10.703 s
+Power:              8.310 mW
+Average current:    2.714 mA
+Average voltage:    3.062 V
 
 src/dijkstra large
-Energy:           140.059 mJ
-Time:              17.118 s
-Power:              8.182 mW
-Average current:    2.716 mA
-Average voltage:    3.013 V
+Energy:           142.875 mJ
+Time:              17.116 s
+Power:              8.347 mW
+Average current:    2.725 mA
+Average voltage:    3.064 V
 
 src/fac small
-Energy:             3.466 mJ
-Time:             436.548 ms
-Power:              7.940 mW
-Average current:    2.637 mA
-Average voltage:    3.012 V
+Energy:             3.548 mJ
+Time:             436.464 ms
+Power:              8.129 mW
+Average current:    2.655 mA
+Average voltage:    3.062 V
 
 src/fac medium
-Energy:             9.534 mJ
-Time:               1.256 s
-Power:              7.593 mW
-Average current:    2.520 mA
-Average voltage:    3.013 V
+Energy:            10.159 mJ
+Time:               1.255 s
+Power:              8.092 mW
+Average current:    2.642 mA
+Average voltage:    3.062 V
 
 src/fac large
-Energy:           116.947 mJ
-Time:              15.252 s
-Power:              7.668 mW
-Average current:    2.546 mA
-Average voltage:    3.012 V
+Energy:           123.045 mJ
+Time:              15.248 s
+Power:              8.070 mW
+Average current:    2.636 mA
+Average voltage:    3.062 V
 
 src/fibcall small
-Energy:             1.547 mJ
-Time:             190.798 ms
-Power:              8.107 mW
-Average current:    2.692 mA
-Average voltage:    3.012 V
+Energy:             1.506 mJ
+Time:             190.750 ms
+Power:              7.893 mW
+Average current:    2.577 mA
+Average voltage:    3.063 V
 
 src/fibcall medium
-Energy:             4.878 mJ
-Time:             597.810 ms
-Power:              8.159 mW
-Average current:    2.709 mA
-Average voltage:    3.012 V
+Energy:             4.769 mJ
+Time:             597.750 ms
+Power:              7.978 mW
+Average current:    2.606 mA
+Average voltage:    3.061 V
 
 src/fibcall large
-Energy:            13.166 mJ
+Energy:            13.423 mJ
 Time:               1.654 s
-Power:              7.960 mW
-Average current:    2.643 mA
-Average voltage:    3.012 V
+Power:              8.116 mW
+Average current:    2.651 mA
+Average voltage:    3.062 V
 
 src/levenshtein small
-Energy:             9.471 mJ
+Energy:            10.751 mJ
 Time:               1.185 s
-Power:              7.993 mW
-Average current:    2.653 mA
-Average voltage:    3.012 V
+Power:              9.074 mW
+Average current:    2.964 mA
+Average voltage:    3.061 V
 
 src/levenshtein medium
-Energy:            35.105 mJ
+Energy:            35.890 mJ
 Time:               4.398 s
-Power:              7.981 mW
-Average current:    2.650 mA
-Average voltage:    3.012 V
+Power:              8.161 mW
+Average current:    2.665 mA
+Average voltage:    3.062 V
 
 src/levenshtein large
-Energy:           346.708 mJ
-Time:              44.186 s
-Power:              7.847 mW
-Average current:    2.605 mA
-Average voltage:    3.012 V
+Energy:           352.426 mJ
+Time:              44.182 s
+Power:              7.977 mW
+Average current:    2.606 mA
+Average voltage:    3.061 V
 
 src/mergesort small
-Energy:             1.402 mJ
-Time:             164.952 ms
-Power:              8.500 mW
-Average current:    2.821 mA
-Average voltage:    3.013 V
+Energy:             1.430 mJ
+Time:             164.929 ms
+Power:              8.667 mW
+Average current:    2.829 mA
+Average voltage:    3.063 V
 
 src/mergesort medium
-Energy:             7.658 mJ
-Time:             914.274 ms
-Power:              8.376 mW
-Average current:    2.781 mA
-Average voltage:    3.012 V
+Energy:             7.876 mJ
+Time:             914.226 ms
+Power:              8.614 mW
+Average current:    2.814 mA
+Average voltage:    3.061 V
 
 src/mergesort large
-Energy:            32.656 mJ
+Energy:            33.064 mJ
 Time:               3.903 s
-Power:              8.366 mW
-Average current:    2.777 mA
-Average voltage:    3.013 V
+Power:              8.471 mW
+Average current:    2.767 mA
+Average voltage:    3.061 V
 
 src/prime small
-Energy:            34.814 mJ
+Energy:            35.403 mJ
 Time:               4.257 s
-Power:              8.178 mW
-Average current:    2.714 mA
-Average voltage:    3.013 V
+Power:              8.317 mW
+Average current:    2.717 mA
+Average voltage:    3.061 V
 
 src/prime medium
-Energy:            91.347 mJ
-Time:              11.230 s
-Power:              8.134 mW
-Average current:    2.699 mA
-Average voltage:    3.013 V
+Energy:            93.116 mJ
+Time:              11.231 s
+Power:              8.291 mW
+Average current:    2.708 mA
+Average voltage:    3.061 V
 
 src/prime large
-Energy:           280.748 mJ
-Time:              34.273 s
-Power:              8.191 mW
-Average current:    2.720 mA
-Average voltage:    3.012 V
+Energy:           285.375 mJ
+Time:              34.275 s
+Power:              8.326 mW
+Average current:    2.721 mA
+Average voltage:    3.060 V
 
 src/recursion small
-Energy:             2.360 mJ
-Time:             314.905 ms
-Power:              7.495 mW
-Average current:    2.489 mA
-Average voltage:    3.012 V
+Energy:             2.503 mJ
+Time:             314.917 ms
+Power:              7.948 mW
+Average current:    2.597 mA
+Average voltage:    3.061 V
 
 src/recursion medium
-Energy:            27.768 mJ
+Energy:            27.051 mJ
 Time:               3.558 s
-Power:              7.805 mW
-Average current:    2.592 mA
-Average voltage:    3.011 V
+Power:              7.603 mW
+Average current:    2.485 mA
+Average voltage:    3.060 V
 
 src/recursion large
-Energy:           304.749 mJ
-Time:              39.514 s
-Power:              7.712 mW
-Average current:    2.561 mA
-Average voltage:    3.012 V
+Energy:           307.830 mJ
+Time:              39.510 s
+Power:              7.791 mW
+Average current:    2.545 mA
+Average voltage:    3.061 V
 
 src/select small
-Energy:            31.911 mJ
+Energy:            31.781 mJ
 Time:               4.012 s
-Power:              7.954 mW
-Average current:    2.641 mA
-Average voltage:    3.011 V
+Power:              7.921 mW
+Average current:    2.589 mA
+Average voltage:    3.059 V
 
 src/select medium
-Energy:            33.686 mJ
+Energy:            34.526 mJ
 Time:               4.206 s
-Power:              8.009 mW
-Average current:    2.659 mA
-Average voltage:    3.012 V
+Power:              8.209 mW
+Average current:    2.683 mA
+Average voltage:    3.060 V
 
 src/select large
-Energy:            34.912 mJ
+Energy:            35.724 mJ
 Time:               4.303 s
-Power:              8.113 mW
-Average current:    2.694 mA
-Average voltage:    3.012 V
+Power:              8.301 mW
+Average current:    2.714 mA
+Average voltage:    3.059 V
 
 src/sglib-arraysort small
 Error: File "src/sglib-arraysort/sglib-arraysort_small" does not exist
 
 src/sglib-arraysort medium
-Energy:           277.010 mJ
+Energy:           281.781 mJ
 Time:              34.546 s
-Power:              8.019 mW
-Average current:    2.662 mA
-Average voltage:    3.012 V
+Power:              8.157 mW
+Average current:    2.665 mA
+Average voltage:    3.061 V
 
 src/sglib-arraysort large
 Error: File "src/sglib-arraysort/sglib-arraysort_large" does not exist
@@ -260,11 +268,11 @@ src/sglib-queue small
 Error: File "src/sglib-queue/sglib-queue_small" does not exist
 
 src/sglib-queue medium
-Energy:           100.279 mJ
+Energy:           101.869 mJ
 Time:              12.247 s
-Power:              8.188 mW
+Power:              8.318 mW
 Average current:    2.719 mA
-Average voltage:    3.011 V
+Average voltage:    3.059 V
 
 src/sglib-queue large
 Error: File "src/sglib-queue/sglib-queue_large" does not exist
@@ -273,11 +281,11 @@ src/slre small
 Error: File "src/slre/slre_small" does not exist
 
 src/slre medium
-Energy:           109.459 mJ
-Time:              13.510 s
-Power:              8.102 mW
-Average current:    2.690 mA
-Average voltage:    3.012 V
+Energy:           111.081 mJ
+Time:              13.512 s
+Power:              8.221 mW
+Average current:    2.686 mA
+Average voltage:    3.061 V
 
 src/slre large
 Error: File "src/slre/slre_large" does not exist
@@ -286,11 +294,11 @@ src/sqrt small
 Error: File "src/sqrt/sqrt_small" does not exist
 
 src/sqrt medium
-Energy:            16.965 mJ
+Energy:            17.353 mJ
 Time:               2.016 s
-Power:              8.414 mW
-Average current:    2.795 mA
-Average voltage:    3.011 V
+Power:              8.606 mW
+Average current:    2.813 mA
+Average voltage:    3.059 V
 
 src/sqrt large
 Error: File "src/sqrt/sqrt_large" does not exist
@@ -299,11 +307,11 @@ src/ud small
 Error: File "src/ud/ud_small" does not exist
 
 src/ud medium
-Energy:             5.632 mJ
-Time:             690.940 ms
-Power:              8.152 mW
-Average current:    2.707 mA
-Average voltage:    3.012 V
+Energy:             5.723 mJ
+Time:             690.917 ms
+Power:              8.284 mW
+Average current:    2.704 mA
+Average voltage:    3.063 V
 
 src/ud large
 Error: File "src/ud/ud_large" does not exist

@@ -20,11 +20,16 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=bs
+bin_PROGRAMS=bs bs_small bs_large
 bs_SOURCES=bs.c
+bs_small_SOURCES=bs.c
+bs_large_SOURCES=bs.c
 
 include $(top_srcdir)/src/common.mk.am
 
 bs_SOURCES += ${platform_src}
+bs_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+bs_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
 
-
+bs_large_SOURCES += ${platform_src}
+bs_small_SOURCES += ${platform_src}

@@ -2,7 +2,7 @@
 
 /* This scale factor will be changed to equalise the runtime of the
    benchmarks. */
-#define SCALE_FACTOR    (REPEAT_FACTOR >> 0)
+#define SCALE_FACTOR    (1 >> 0)
 
 
 /* $Id: cnt.c,v 1.3 2005/04/04 11:34:58 csg Exp $ */
@@ -23,7 +23,16 @@
 
 // #define MAXSIZE 100 Changed JG/Ebbe
 
-#define MAXSIZE 10
+
+// Alter maxsize to selected data size
+#ifdef SMALL_D
+  #define MAXSIZE 4
+#elif defined(LARGE_D)
+  #define MAXSIZE 20
+#else
+  //medium
+  #define MAXSIZE 10
+#endif
 
 
 

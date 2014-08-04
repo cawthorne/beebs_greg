@@ -41,7 +41,7 @@
 
 /* This scale factor will be changed to equalise the runtime of the
    benchmarks. */
-#define SCALE_FACTOR    (REPEAT_FACTOR >> 0)
+#define SCALE_FACTOR    (REPEAT_FACTOR >> 5)
 
 
 #include <string.h>
@@ -77,27 +77,46 @@ int levenshtein_distance(const char *s, const char *t) {
     return d[sl][tl];
 }
 
-const char *strings[] = {"srrjngre", "asfcjnsdkj", "string", "msd",
-    "strings"};
+// Alter list size to selected data size
+#ifdef SMALL_D
+  #define NUMELEMS 3
+#elif defined(LARGE_D)
+  #define NUMELEMS 15
+#else
+  //medium
+  #define NUMELEMS 6
+#endif
+
+#ifdef SMALL_D
+  const char *strings[] = {"srrjngre", "asfcjnsdkj", "msd"};
+#elif defined(LARGE_D)
+  const char *strings[] = {"srrjngre", "asfcjnsdkj",  "vncjvbrk", "hdksdjfo", "ssdfg", "xuqhfpyendkdc", "ioioioioio", "yyyyyyy", "qwertyuiopasdfghjkl", "organic", "cawthorne"  "string", "msd",
+    "strings", "quacky"};
+#else
+  //medium
+    const char *strings[] = {"srrjngre", "asfcjnsdkj", "string", "msd",
+    "strings", "quacky"};
+#endif
+;
 
 int benchmark()
 {
   int i, j;
   volatile unsigned sum = 0;
 
-  for(i = 0; i < 5; ++i)
-    for(j = 0; j < 5; ++j)
+  for(i = 0; i < NUMELEMS; ++i)
+    for(j = 0; j < NUMELEMS; ++j)
       sum += levenshtein_distance(strings[i], strings[j]);
 
   return sum;
 
 }
 
+
 int
 main (void)
 {
   int i;
-
   initialise_board ();
   start_trigger ();
 

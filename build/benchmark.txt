@@ -1,0 +1,310 @@
+Benchmarks for Mon Aug 4 14:28:55 UTC 2014
+src/2dfir small
+Energy:             1.216 mJ
+Time:             150.119 ms
+Power:              8.099 mW
+Average current:    2.687 mA
+Average voltage:    3.014 V
+
+src/2dfir medium
+Energy:             7.960 mJ
+Time:             991.024 ms
+Power:              8.032 mW
+Average current:    2.666 mA
+Average voltage:    3.013 V
+
+src/2dfir large
+Energy:            31.494 mJ
+Time:               4.055 s
+Power:              7.766 mW
+Average current:    2.577 mA
+Average voltage:    3.014 V
+
+src/bs small
+Error: File "src/bs/bs_small" does not exist
+
+src/bs medium
+Energy:           425.136 uJ
+Time:              51.381 ms
+Power:              8.274 mW
+Average current:    2.745 mA
+Average voltage:    3.014 V
+
+src/bs large
+Error: File "src/bs/bs_large" does not exist
+
+src/bubblesort small
+Energy:            11.496 mJ
+Time:               1.452 s
+Power:              7.915 mW
+Average current:    2.627 mA
+Average voltage:    3.013 V
+
+src/bubblesort medium
+Energy:            68.339 mJ
+Time:               8.537 s
+Power:              8.005 mW
+Average current:    2.658 mA
+Average voltage:    3.012 V
+
+src/bubblesort large
+Energy:           421.152 mJ
+Time:              52.210 s
+Power:              8.066 mW
+Average current:    2.677 mA
+Average voltage:    3.013 V
+
+src/cnt small
+Energy:             6.355 uJ
+Time:             642.857 us
+Power:              9.885 mW
+Average current:    3.281 mA
+Average voltage:    3.012 V
+
+src/cnt medium
+Energy:            28.231 uJ
+Time:               3.357 ms
+Power:              8.409 mW
+Average current:    2.792 mA
+Average voltage:    3.012 V
+
+src/cnt large
+Energy:           110.675 uJ
+Time:              13.012 ms
+Power:              8.506 mW
+Average current:    2.824 mA
+Average voltage:    3.012 V
+
+src/dijkstra small
+Energy:           412.258 uJ
+Time:              49.798 ms
+Power:              8.279 mW
+Average current:    2.748 mA
+Average voltage:    3.013 V
+
+src/dijkstra medium
+Energy:            86.648 mJ
+Time:              10.705 s
+Power:              8.094 mW
+Average current:    2.687 mA
+Average voltage:    3.013 V
+
+src/dijkstra large
+Energy:           140.059 mJ
+Time:              17.118 s
+Power:              8.182 mW
+Average current:    2.716 mA
+Average voltage:    3.013 V
+
+src/fac small
+Energy:             3.466 mJ
+Time:             436.548 ms
+Power:              7.940 mW
+Average current:    2.637 mA
+Average voltage:    3.012 V
+
+src/fac medium
+Energy:             9.534 mJ
+Time:               1.256 s
+Power:              7.593 mW
+Average current:    2.520 mA
+Average voltage:    3.013 V
+
+src/fac large
+Energy:           116.947 mJ
+Time:              15.252 s
+Power:              7.668 mW
+Average current:    2.546 mA
+Average voltage:    3.012 V
+
+src/fibcall small
+Energy:             1.547 mJ
+Time:             190.798 ms
+Power:              8.107 mW
+Average current:    2.692 mA
+Average voltage:    3.012 V
+
+src/fibcall medium
+Energy:             4.878 mJ
+Time:             597.810 ms
+Power:              8.159 mW
+Average current:    2.709 mA
+Average voltage:    3.012 V
+
+src/fibcall large
+Energy:            13.166 mJ
+Time:               1.654 s
+Power:              7.960 mW
+Average current:    2.643 mA
+Average voltage:    3.012 V
+
+src/levenshtein small
+Energy:             9.471 mJ
+Time:               1.185 s
+Power:              7.993 mW
+Average current:    2.653 mA
+Average voltage:    3.012 V
+
+src/levenshtein medium
+Energy:            35.105 mJ
+Time:               4.398 s
+Power:              7.981 mW
+Average current:    2.650 mA
+Average voltage:    3.012 V
+
+src/levenshtein large
+Energy:           346.708 mJ
+Time:              44.186 s
+Power:              7.847 mW
+Average current:    2.605 mA
+Average voltage:    3.012 V
+
+src/mergesort small
+Energy:             1.402 mJ
+Time:             164.952 ms
+Power:              8.500 mW
+Average current:    2.821 mA
+Average voltage:    3.013 V
+
+src/mergesort medium
+Energy:             7.658 mJ
+Time:             914.274 ms
+Power:              8.376 mW
+Average current:    2.781 mA
+Average voltage:    3.012 V
+
+src/mergesort large
+Energy:            32.656 mJ
+Time:               3.903 s
+Power:              8.366 mW
+Average current:    2.777 mA
+Average voltage:    3.013 V
+
+src/prime small
+Energy:            34.814 mJ
+Time:               4.257 s
+Power:              8.178 mW
+Average current:    2.714 mA
+Average voltage:    3.013 V
+
+src/prime medium
+Energy:            91.347 mJ
+Time:              11.230 s
+Power:              8.134 mW
+Average current:    2.699 mA
+Average voltage:    3.013 V
+
+src/prime large
+Energy:           280.748 mJ
+Time:              34.273 s
+Power:              8.191 mW
+Average current:    2.720 mA
+Average voltage:    3.012 V
+
+src/recursion small
+Energy:             2.360 mJ
+Time:             314.905 ms
+Power:              7.495 mW
+Average current:    2.489 mA
+Average voltage:    3.012 V
+
+src/recursion medium
+Energy:            27.768 mJ
+Time:               3.558 s
+Power:              7.805 mW
+Average current:    2.592 mA
+Average voltage:    3.011 V
+
+src/recursion large
+Energy:           304.749 mJ
+Time:              39.514 s
+Power:              7.712 mW
+Average current:    2.561 mA
+Average voltage:    3.012 V
+
+src/select small
+Energy:            31.911 mJ
+Time:               4.012 s
+Power:              7.954 mW
+Average current:    2.641 mA
+Average voltage:    3.011 V
+
+src/select medium
+Energy:            33.686 mJ
+Time:               4.206 s
+Power:              8.009 mW
+Average current:    2.659 mA
+Average voltage:    3.012 V
+
+src/select large
+Energy:            34.912 mJ
+Time:               4.303 s
+Power:              8.113 mW
+Average current:    2.694 mA
+Average voltage:    3.012 V
+
+src/sglib-arraysort small
+Error: File "src/sglib-arraysort/sglib-arraysort_small" does not exist
+
+src/sglib-arraysort medium
+Energy:           277.010 mJ
+Time:              34.546 s
+Power:              8.019 mW
+Average current:    2.662 mA
+Average voltage:    3.012 V
+
+src/sglib-arraysort large
+Error: File "src/sglib-arraysort/sglib-arraysort_large" does not exist
+
+src/sglib-queue small
+Error: File "src/sglib-queue/sglib-queue_small" does not exist
+
+src/sglib-queue medium
+Energy:           100.279 mJ
+Time:              12.247 s
+Power:              8.188 mW
+Average current:    2.719 mA
+Average voltage:    3.011 V
+
+src/sglib-queue large
+Error: File "src/sglib-queue/sglib-queue_large" does not exist
+
+src/slre small
+Error: File "src/slre/slre_small" does not exist
+
+src/slre medium
+Energy:           109.459 mJ
+Time:              13.510 s
+Power:              8.102 mW
+Average current:    2.690 mA
+Average voltage:    3.012 V
+
+src/slre large
+Error: File "src/slre/slre_large" does not exist
+
+src/sqrt small
+Error: File "src/sqrt/sqrt_small" does not exist
+
+src/sqrt medium
+Energy:            16.965 mJ
+Time:               2.016 s
+Power:              8.414 mW
+Average current:    2.795 mA
+Average voltage:    3.011 V
+
+src/sqrt large
+Error: File "src/sqrt/sqrt_large" does not exist
+
+src/ud small
+Error: File "src/ud/ud_small" does not exist
+
+src/ud medium
+Energy:             5.632 mJ
+Time:             690.940 ms
+Power:              8.152 mW
+Average current:    2.707 mA
+Average voltage:    3.012 V
+
+src/ud large
+Error: File "src/ud/ud_large" does not exist
+

@@ -1,0 +1,6 @@
+bf_enc.o: ../../../src/blowfish/bf_enc.c ../../../src/blowfish/blowfish.h \
+ ../../../src/blowfish/bf_locl.h
+
+../../../src/blowfish/blowfish.h:
+
+../../../src/blowfish/bf_locl.h:

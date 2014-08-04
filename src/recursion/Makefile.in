@@ -123,7 +123,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-bin_PROGRAMS = recursion$(EXEEXT)
+bin_PROGRAMS = recursion$(EXEEXT) recursion_large$(EXEEXT) \
+	recursion_small$(EXEEXT)
 DIST_COMMON = $(top_srcdir)/src/common.mk.am $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/build-aux/depcomp
 @CHIPSUPPORT_C_TRUE@am__append_1 = $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
@@ -153,6 +154,36 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am__recursion_large_SOURCES_DIST = recursion.c \
+	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
+	$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@CHIPSUPPORT_C_TRUE@am__objects_3 =  \
+@CHIPSUPPORT_C_TRUE@	recursion_large-chipsupport.$(OBJEXT)
+am__objects_4 = recursion_large-boardsupport.$(OBJEXT) \
+	$(am__objects_3)
+am_recursion_large_OBJECTS = recursion_large-recursion.$(OBJEXT) \
+	$(am__objects_4)
+recursion_large_OBJECTS = $(am_recursion_large_OBJECTS)
+recursion_large_LDADD = $(LDADD)
+recursion_large_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(recursion_large_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
+am__recursion_small_SOURCES_DIST = recursion.c \
+	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
+	$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@CHIPSUPPORT_C_TRUE@am__objects_5 =  \
+@CHIPSUPPORT_C_TRUE@	recursion_small-chipsupport.$(OBJEXT)
+am__objects_6 = recursion_small-boardsupport.$(OBJEXT) \
+	$(am__objects_5)
+am_recursion_small_OBJECTS = recursion_small-recursion.$(OBJEXT) \
+	$(am__objects_6)
+recursion_small_OBJECTS = $(am_recursion_small_OBJECTS)
+recursion_small_LDADD = $(LDADD)
+recursion_small_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(recursion_small_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -187,8 +218,11 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(recursion_SOURCES)
-DIST_SOURCES = $(am__recursion_SOURCES_DIST)
+SOURCES = $(recursion_SOURCES) $(recursion_large_SOURCES) \
+	$(recursion_small_SOURCES)
+DIST_SOURCES = $(am__recursion_SOURCES_DIST) \
+	$(am__recursion_large_SOURCES_DIST) \
+	$(am__recursion_small_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -344,6 +378,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 recursion_SOURCES = recursion.c ${platform_src}
+recursion_large_SOURCES = recursion.c ${platform_src}
+recursion_small_SOURCES = recursion.c ${platform_src}
 platform_src =  \
 	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
 	$(am__append_1)
@@ -351,6 +387,8 @@ AM_CFLAGS = -I $(top_srcdir)/include \
 		  -I $(top_srcdir)/config/@ARCH@/boards/@BOARD@/ \
 		  -I $(top_srcdir)/config/@ARCH@/chips/@CHIP@/
 
+recursion_large_CFLAGS = -DLARGE_D $(AM_CFLAGS)
+recursion_small_CFLAGS = -DSMALL_D $(AM_CFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -440,6 +478,14 @@ recursion$(EXEEXT): $(recursion_OBJECTS) $(recursion_DEPENDENCIES) $(EXTRA_recur
 	@rm -f recursion$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(recursion_OBJECTS) $(recursion_LDADD) $(LIBS)
 
+recursion_large$(EXEEXT): $(recursion_large_OBJECTS) $(recursion_large_DEPENDENCIES) $(EXTRA_recursion_large_DEPENDENCIES) 
+	@rm -f recursion_large$(EXEEXT)
+	$(AM_V_CCLD)$(recursion_large_LINK) $(recursion_large_OBJECTS) $(recursion_large_LDADD) $(LIBS)
+
+recursion_small$(EXEEXT): $(recursion_small_OBJECTS) $(recursion_small_DEPENDENCIES) $(EXTRA_recursion_small_DEPENDENCIES) 
+	@rm -f recursion_small$(EXEEXT)
+	$(AM_V_CCLD)$(recursion_small_LINK) $(recursion_small_OBJECTS) $(recursion_small_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -449,6 +495,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boardsupport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chipsupport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_large-boardsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_large-chipsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_large-recursion.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_small-boardsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_small-chipsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/recursion_small-recursion.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -498,6 +550,90 @@ chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='chipsupport.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+
+recursion_large-recursion.o: recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-recursion.o -MD -MP -MF $(DEPDIR)/recursion_large-recursion.Tpo -c -o recursion_large-recursion.o `test -f 'recursion.c' || echo '$(srcdir)/'`recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-recursion.Tpo $(DEPDIR)/recursion_large-recursion.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recursion.c' object='recursion_large-recursion.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-recursion.o `test -f 'recursion.c' || echo '$(srcdir)/'`recursion.c
+
+recursion_large-recursion.obj: recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-recursion.obj -MD -MP -MF $(DEPDIR)/recursion_large-recursion.Tpo -c -o recursion_large-recursion.obj `if test -f 'recursion.c'; then $(CYGPATH_W) 'recursion.c'; else $(CYGPATH_W) '$(srcdir)/recursion.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-recursion.Tpo $(DEPDIR)/recursion_large-recursion.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recursion.c' object='recursion_large-recursion.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-recursion.obj `if test -f 'recursion.c'; then $(CYGPATH_W) 'recursion.c'; else $(CYGPATH_W) '$(srcdir)/recursion.c'; fi`
+
+recursion_large-boardsupport.o: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-boardsupport.o -MD -MP -MF $(DEPDIR)/recursion_large-boardsupport.Tpo -c -o recursion_large-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-boardsupport.Tpo $(DEPDIR)/recursion_large-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='recursion_large-boardsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+
+recursion_large-boardsupport.obj: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-boardsupport.obj -MD -MP -MF $(DEPDIR)/recursion_large-boardsupport.Tpo -c -o recursion_large-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-boardsupport.Tpo $(DEPDIR)/recursion_large-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='recursion_large-boardsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+
+recursion_large-chipsupport.o: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-chipsupport.o -MD -MP -MF $(DEPDIR)/recursion_large-chipsupport.Tpo -c -o recursion_large-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-chipsupport.Tpo $(DEPDIR)/recursion_large-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='recursion_large-chipsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+
+recursion_large-chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -MT recursion_large-chipsupport.obj -MD -MP -MF $(DEPDIR)/recursion_large-chipsupport.Tpo -c -o recursion_large-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_large-chipsupport.Tpo $(DEPDIR)/recursion_large-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='recursion_large-chipsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_large_CFLAGS) $(CFLAGS) -c -o recursion_large-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+
+recursion_small-recursion.o: recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-recursion.o -MD -MP -MF $(DEPDIR)/recursion_small-recursion.Tpo -c -o recursion_small-recursion.o `test -f 'recursion.c' || echo '$(srcdir)/'`recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-recursion.Tpo $(DEPDIR)/recursion_small-recursion.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recursion.c' object='recursion_small-recursion.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-recursion.o `test -f 'recursion.c' || echo '$(srcdir)/'`recursion.c
+
+recursion_small-recursion.obj: recursion.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-recursion.obj -MD -MP -MF $(DEPDIR)/recursion_small-recursion.Tpo -c -o recursion_small-recursion.obj `if test -f 'recursion.c'; then $(CYGPATH_W) 'recursion.c'; else $(CYGPATH_W) '$(srcdir)/recursion.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-recursion.Tpo $(DEPDIR)/recursion_small-recursion.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recursion.c' object='recursion_small-recursion.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-recursion.obj `if test -f 'recursion.c'; then $(CYGPATH_W) 'recursion.c'; else $(CYGPATH_W) '$(srcdir)/recursion.c'; fi`
+
+recursion_small-boardsupport.o: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-boardsupport.o -MD -MP -MF $(DEPDIR)/recursion_small-boardsupport.Tpo -c -o recursion_small-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-boardsupport.Tpo $(DEPDIR)/recursion_small-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='recursion_small-boardsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+
+recursion_small-boardsupport.obj: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-boardsupport.obj -MD -MP -MF $(DEPDIR)/recursion_small-boardsupport.Tpo -c -o recursion_small-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-boardsupport.Tpo $(DEPDIR)/recursion_small-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='recursion_small-boardsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+
+recursion_small-chipsupport.o: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-chipsupport.o -MD -MP -MF $(DEPDIR)/recursion_small-chipsupport.Tpo -c -o recursion_small-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-chipsupport.Tpo $(DEPDIR)/recursion_small-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='recursion_small-chipsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+
+recursion_small-chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -MT recursion_small-chipsupport.obj -MD -MP -MF $(DEPDIR)/recursion_small-chipsupport.Tpo -c -o recursion_small-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/recursion_small-chipsupport.Tpo $(DEPDIR)/recursion_small-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='recursion_small-chipsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(recursion_small_CFLAGS) $(CFLAGS) -c -o recursion_small-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

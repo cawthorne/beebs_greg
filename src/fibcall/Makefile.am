@@ -20,9 +20,18 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=fibcall
+bin_PROGRAMS=fibcall fibcall_large fibcall_small
 fibcall_SOURCES=fibcall.c
+fibcall_large_SOURCES=fibcall.c
+fibcall_small_SOURCES=fibcall.c
 
 include $(top_srcdir)/src/common.mk.am
 
 fibcall_SOURCES += ${platform_src}
+
+fibcall_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+fibcall_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+
+fibcall_large_SOURCES += ${platform_src}
+fibcall_small_SOURCES += ${platform_src}

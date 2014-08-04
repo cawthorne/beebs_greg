@@ -1,0 +1,12 @@
+arraysort.o: ../../../src/sglib-arraysort/arraysort.c \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h \
+ ../../../src/sglib-arraysort/sglib.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:
+
+../../../src/sglib-arraysort/sglib.h:

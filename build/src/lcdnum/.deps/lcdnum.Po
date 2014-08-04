@@ -1,0 +1,8 @@
+lcdnum.o: ../../../src/lcdnum/lcdnum.c ../../../include/support.h \
+ ../../config.h ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

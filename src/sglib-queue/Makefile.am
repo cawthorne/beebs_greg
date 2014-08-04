@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=sglib-queue
-sglib_queue_SOURCES=queue.c sglib.h
+bin_PROGRAMS=sglib-queue sglib-queue_large sglib-queue_small
+sglib-queue_SOURCES=sglib-queue.c sglib.h
+sglib-queue_large_SOURCES=sglib-queue.c sglib.h
+sglib-queue_small_SOURCES=sglib-queue.c sglib.h
 
 include $(top_srcdir)/src/common.mk.am
 
-sglib_queue_SOURCES += ${platform_src}
+sglib-queue_SOURCES += ${platform_src}
+
+sglib-queue_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+sglib-queue_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+sglib-queue_large_SOURCES += ${platform_src}
+sglib-queue_small_SOURCES += ${platform}

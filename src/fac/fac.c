@@ -42,7 +42,16 @@ benchmark (void)
   volatile int s = 0;
   volatile int n;
 
-  n = 10;
+  //Slect the size of the data
+  #ifdef SMALL_D
+    n= 5;
+  #elif defined(LARGE_D)
+    n= 40;
+  #else
+    //medium
+    n= 10;
+  #endif
+
   for (i = 0;  i <= n; i++)
       s += fac (i);
 }

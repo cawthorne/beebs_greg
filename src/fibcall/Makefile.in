@@ -123,7 +123,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-bin_PROGRAMS = fibcall$(EXEEXT)
+bin_PROGRAMS = fibcall$(EXEEXT) fibcall_large$(EXEEXT) \
+	fibcall_small$(EXEEXT)
 DIST_COMMON = $(top_srcdir)/src/common.mk.am $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/build-aux/depcomp
 @CHIPSUPPORT_C_TRUE@am__append_1 = $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
@@ -153,6 +154,32 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am__fibcall_large_SOURCES_DIST = fibcall.c \
+	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
+	$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@CHIPSUPPORT_C_TRUE@am__objects_3 =  \
+@CHIPSUPPORT_C_TRUE@	fibcall_large-chipsupport.$(OBJEXT)
+am__objects_4 = fibcall_large-boardsupport.$(OBJEXT) $(am__objects_3)
+am_fibcall_large_OBJECTS = fibcall_large-fibcall.$(OBJEXT) \
+	$(am__objects_4)
+fibcall_large_OBJECTS = $(am_fibcall_large_OBJECTS)
+fibcall_large_LDADD = $(LDADD)
+fibcall_large_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(fibcall_large_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am__fibcall_small_SOURCES_DIST = fibcall.c \
+	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
+	$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@CHIPSUPPORT_C_TRUE@am__objects_5 =  \
+@CHIPSUPPORT_C_TRUE@	fibcall_small-chipsupport.$(OBJEXT)
+am__objects_6 = fibcall_small-boardsupport.$(OBJEXT) $(am__objects_5)
+am_fibcall_small_OBJECTS = fibcall_small-fibcall.$(OBJEXT) \
+	$(am__objects_6)
+fibcall_small_OBJECTS = $(am_fibcall_small_OBJECTS)
+fibcall_small_LDADD = $(LDADD)
+fibcall_small_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(fibcall_small_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -187,8 +214,11 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(fibcall_SOURCES)
-DIST_SOURCES = $(am__fibcall_SOURCES_DIST)
+SOURCES = $(fibcall_SOURCES) $(fibcall_large_SOURCES) \
+	$(fibcall_small_SOURCES)
+DIST_SOURCES = $(am__fibcall_SOURCES_DIST) \
+	$(am__fibcall_large_SOURCES_DIST) \
+	$(am__fibcall_small_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -344,6 +374,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 fibcall_SOURCES = fibcall.c ${platform_src}
+fibcall_large_SOURCES = fibcall.c ${platform_src}
+fibcall_small_SOURCES = fibcall.c ${platform_src}
 platform_src =  \
 	$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c \
 	$(am__append_1)
@@ -351,6 +383,8 @@ AM_CFLAGS = -I $(top_srcdir)/include \
 		  -I $(top_srcdir)/config/@ARCH@/boards/@BOARD@/ \
 		  -I $(top_srcdir)/config/@ARCH@/chips/@CHIP@/
 
+fibcall_large_CFLAGS = -DLARGE_D $(AM_CFLAGS)
+fibcall_small_CFLAGS = -DSMALL_D $(AM_CFLAGS)
 all: all-am
 
 .SUFFIXES:
@@ -440,6 +474,14 @@ fibcall$(EXEEXT): $(fibcall_OBJECTS) $(fibcall_DEPENDENCIES) $(EXTRA_fibcall_DEP
 	@rm -f fibcall$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(fibcall_OBJECTS) $(fibcall_LDADD) $(LIBS)
 
+fibcall_large$(EXEEXT): $(fibcall_large_OBJECTS) $(fibcall_large_DEPENDENCIES) $(EXTRA_fibcall_large_DEPENDENCIES) 
+	@rm -f fibcall_large$(EXEEXT)
+	$(AM_V_CCLD)$(fibcall_large_LINK) $(fibcall_large_OBJECTS) $(fibcall_large_LDADD) $(LIBS)
+
+fibcall_small$(EXEEXT): $(fibcall_small_OBJECTS) $(fibcall_small_DEPENDENCIES) $(EXTRA_fibcall_small_DEPENDENCIES) 
+	@rm -f fibcall_small$(EXEEXT)
+	$(AM_V_CCLD)$(fibcall_small_LINK) $(fibcall_small_OBJECTS) $(fibcall_small_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -449,6 +491,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boardsupport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/chipsupport.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_large-boardsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_large-chipsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_large-fibcall.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_small-boardsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_small-chipsupport.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fibcall_small-fibcall.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -498,6 +546,90 @@ chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='chipsupport.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+
+fibcall_large-fibcall.o: fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-fibcall.o -MD -MP -MF $(DEPDIR)/fibcall_large-fibcall.Tpo -c -o fibcall_large-fibcall.o `test -f 'fibcall.c' || echo '$(srcdir)/'`fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-fibcall.Tpo $(DEPDIR)/fibcall_large-fibcall.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fibcall.c' object='fibcall_large-fibcall.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-fibcall.o `test -f 'fibcall.c' || echo '$(srcdir)/'`fibcall.c
+
+fibcall_large-fibcall.obj: fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-fibcall.obj -MD -MP -MF $(DEPDIR)/fibcall_large-fibcall.Tpo -c -o fibcall_large-fibcall.obj `if test -f 'fibcall.c'; then $(CYGPATH_W) 'fibcall.c'; else $(CYGPATH_W) '$(srcdir)/fibcall.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-fibcall.Tpo $(DEPDIR)/fibcall_large-fibcall.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fibcall.c' object='fibcall_large-fibcall.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-fibcall.obj `if test -f 'fibcall.c'; then $(CYGPATH_W) 'fibcall.c'; else $(CYGPATH_W) '$(srcdir)/fibcall.c'; fi`
+
+fibcall_large-boardsupport.o: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-boardsupport.o -MD -MP -MF $(DEPDIR)/fibcall_large-boardsupport.Tpo -c -o fibcall_large-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-boardsupport.Tpo $(DEPDIR)/fibcall_large-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='fibcall_large-boardsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+
+fibcall_large-boardsupport.obj: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-boardsupport.obj -MD -MP -MF $(DEPDIR)/fibcall_large-boardsupport.Tpo -c -o fibcall_large-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-boardsupport.Tpo $(DEPDIR)/fibcall_large-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='fibcall_large-boardsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+
+fibcall_large-chipsupport.o: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-chipsupport.o -MD -MP -MF $(DEPDIR)/fibcall_large-chipsupport.Tpo -c -o fibcall_large-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-chipsupport.Tpo $(DEPDIR)/fibcall_large-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='fibcall_large-chipsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+
+fibcall_large-chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -MT fibcall_large-chipsupport.obj -MD -MP -MF $(DEPDIR)/fibcall_large-chipsupport.Tpo -c -o fibcall_large-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_large-chipsupport.Tpo $(DEPDIR)/fibcall_large-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='fibcall_large-chipsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_large_CFLAGS) $(CFLAGS) -c -o fibcall_large-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+
+fibcall_small-fibcall.o: fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-fibcall.o -MD -MP -MF $(DEPDIR)/fibcall_small-fibcall.Tpo -c -o fibcall_small-fibcall.o `test -f 'fibcall.c' || echo '$(srcdir)/'`fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-fibcall.Tpo $(DEPDIR)/fibcall_small-fibcall.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fibcall.c' object='fibcall_small-fibcall.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-fibcall.o `test -f 'fibcall.c' || echo '$(srcdir)/'`fibcall.c
+
+fibcall_small-fibcall.obj: fibcall.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-fibcall.obj -MD -MP -MF $(DEPDIR)/fibcall_small-fibcall.Tpo -c -o fibcall_small-fibcall.obj `if test -f 'fibcall.c'; then $(CYGPATH_W) 'fibcall.c'; else $(CYGPATH_W) '$(srcdir)/fibcall.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-fibcall.Tpo $(DEPDIR)/fibcall_small-fibcall.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fibcall.c' object='fibcall_small-fibcall.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-fibcall.obj `if test -f 'fibcall.c'; then $(CYGPATH_W) 'fibcall.c'; else $(CYGPATH_W) '$(srcdir)/fibcall.c'; fi`
+
+fibcall_small-boardsupport.o: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-boardsupport.o -MD -MP -MF $(DEPDIR)/fibcall_small-boardsupport.Tpo -c -o fibcall_small-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-boardsupport.Tpo $(DEPDIR)/fibcall_small-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='fibcall_small-boardsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-boardsupport.o `test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+
+fibcall_small-boardsupport.obj: $(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-boardsupport.obj -MD -MP -MF $(DEPDIR)/fibcall_small-boardsupport.Tpo -c -o fibcall_small-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-boardsupport.Tpo $(DEPDIR)/fibcall_small-boardsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c' object='fibcall_small-boardsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-boardsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/boards/@BOARD@/boardsupport.c'; fi`
+
+fibcall_small-chipsupport.o: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-chipsupport.o -MD -MP -MF $(DEPDIR)/fibcall_small-chipsupport.Tpo -c -o fibcall_small-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-chipsupport.Tpo $(DEPDIR)/fibcall_small-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='fibcall_small-chipsupport.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-chipsupport.o `test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' || echo '$(srcdir)/'`$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+
+fibcall_small-chipsupport.obj: $(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -MT fibcall_small-chipsupport.obj -MD -MP -MF $(DEPDIR)/fibcall_small-chipsupport.Tpo -c -o fibcall_small-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fibcall_small-chipsupport.Tpo $(DEPDIR)/fibcall_small-chipsupport.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c' object='fibcall_small-chipsupport.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fibcall_small_CFLAGS) $(CFLAGS) -c -o fibcall_small-chipsupport.obj `if test -f '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; then $(CYGPATH_W) '$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/config/@ARCH@/chips/@CHIP@/chipsupport.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

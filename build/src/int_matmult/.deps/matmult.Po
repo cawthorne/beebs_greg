@@ -1,0 +1,8 @@
+matmult.o: ../../../src/int_matmult/matmult.c ../../../include/support.h \
+ ../../config.h ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

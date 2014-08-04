@@ -1,0 +1,6 @@
+aes.o: ../../../src/rijndael/aes.c ../../../src/rijndael/aes.h \
+ ../../../src/rijndael/aestab.h
+
+../../../src/rijndael/aes.h:
+
+../../../src/rijndael/aestab.h:

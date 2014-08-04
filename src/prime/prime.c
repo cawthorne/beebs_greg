@@ -66,6 +66,16 @@ benchmark (void)
   volatile int result = 0;
   uint x =  21649;
   uint y = 513239;
+  #ifdef SMALL_D
+    x = 1019;
+    y = 1951;
+  #elif defined(LARGE_D)
+    x = 88037;
+    y = 60353;
+  #else
+    x = 21649;
+    y = 1951;
+  #endif
   swap (&x, &y);
   result = (!(prime(x) && prime(y)));
 }

@@ -20,9 +20,18 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=slre
+bin_PROGRAMS=slre slre_large slre_small
 slre_SOURCES=slre.c slre.h
+slre_large_SOURCES=slre.c slre.h
+slre_small_SOURCES=slre.c slre.h
 
 include $(top_srcdir)/src/common.mk.am
 
 slre_SOURCES += ${platform_src}
+
+
+slre_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+slre_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+slre_large_SOURCES += ${platform_src}
+slre_small_SOURCES += ${platform_src}

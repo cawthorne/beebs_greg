@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=select
+bin_PROGRAMS=select select_large select_small
 select_SOURCES=select.c
+select_large_SOURCES=select.c
+select_small_SOURCES=select.c
 
 include $(top_srcdir)/src/common.mk.am
 
 select_SOURCES += ${platform_src}
+
+select_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+select_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+select_large_SOURCES += ${platform_src}
+select_small_SOURCES += ${platform_src}

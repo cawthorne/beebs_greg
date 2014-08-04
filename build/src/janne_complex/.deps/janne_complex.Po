@@ -1,0 +1,9 @@
+janne_complex.o: ../../../src/janne_complex/janne_complex.c \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

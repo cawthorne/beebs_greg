@@ -20,9 +20,18 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=mergesort
+bin_PROGRAMS=mergesort mergesort_large mergesort_small
 mergesort_SOURCES=mergesort.c
+mergesort_large_SOURCES=mergesort.c
+mergesort_small_SOURCES=mergesort.c
 
 include $(top_srcdir)/src/common.mk.am
 
 mergesort_SOURCES += ${platform_src}
+
+
+mergesort_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+mergesort_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+mergesort_large_SOURCES += ${platform_src}
+mergesort_small_SOURCES += ${platform_src}

@@ -1,0 +1,11 @@
+sha_driver.o: ../../../src/sha/sha_driver.c ../../../include/support.h \
+ ../../config.h ../../../config/arm/chips/stm32f051/chipsupport.h \
+ ../../../src/sha/sha.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:
+
+../../../src/sha/sha.h:

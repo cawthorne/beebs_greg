@@ -189,11 +189,21 @@ long TestingMostlyEqual(long index, long total) {
 	return 1000 + rand() * 1.0/RAND_MAX * 4;
 }
 
+//Slect the size on the data
 
-const long max_size = 100;
-Test array1[100];
+#ifdef SMALL_D
+	#define max_size 20
+#elif defined(LARGE_D)
+	#define max_size 400
+#else
+	#define max_size 100
+#endif
+
 
 int benchmark() {
+
+	Test array1[max_size];
+	
 	long total, index, test_case;
 	double total_time, total_time1, total_time2;
 	Comparison compare = TestCompare;

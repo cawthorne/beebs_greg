@@ -1,0 +1,9 @@
+set benchmarks "2dfir adpcm blowfish bs bsort100 bubblesort cnt compress cover crc crc32 ctl-string ctl-stack ctl-vector cubic dhrystone dijkstra dtoa duff edn expint fac fasta fdct fft fibcall fir float_matmult frac gdb-advance gdb-all-types gdb-anon gdb-arrayidx gdb-async gdb-bitfields gdb-constvars gdb-store huffbench insertsort int_matmult janne_complex jfdctint lcdnum levenshtein lms ludcmp mergesort miniz minver nbody ndes nettle-arcfour nettle-cast128 nettle-des nettle-md5 newlib-exp newlib-log newlib-mod newlib-sqrt ns nsichneu prime qsort qurt recursion rijndael select sglib-arraybinsearch sglib-arraysort sglib-arraysort1 sglib-dllist sglib-hashtable sglib-listinsertsort sglib-listinsertsort1 sglib-listsort sglib-queue sglib-rbtree sha slre stringsearch1 strstr sqrt st statemate tarai ud wikisort whetstone "
+
+if ![info exists boards_dir] {
+  lappend boards_dir "$srcdir/dejagnu"
+} else {
+  set boards_dir "$srcdir/dejagnu"
+}
+lappend boards_dir "$srcdir/dejagnu/baseboards"
+lappend boards_dir "$srcdir/dejagnu/config"

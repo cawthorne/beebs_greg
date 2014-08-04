@@ -75,6 +75,15 @@
 /*                                                                       */
 /*************************************************************************/
 
+// Alter iteration size to selected data size
+#ifdef SMALL_D
+  #define LIMIT 5000
+#elif defined(LARGE_D)
+  #define LIMIT 15000
+#else
+  //medium
+  #define LIMIT 10000
+#endif
 
 float fabs(float x)
 {
@@ -120,7 +129,7 @@ void benchmark()
   float i = 0.0;
   volatile float accum = 0.0;
 
-  for(i = 0.0; i < 10000.; i += 100.)
+  for(i = 0.0; i < LIMIT; i += 100.)
     accum += sqrtfcn(i);
 }
 

@@ -14,7 +14,15 @@
 #define WORSTCASE 1
 #define FALSE 0
 #define TRUE 1
-#define NUMELEMS 100
+
+#ifdef SMALL_D
+  #define NUMELEMS 8
+#elif defined(LARGE_D)
+  #define NUMELEMS 50
+#else
+  #define NUMELEMS 20
+#endif
+
 #define MAXDIM   (NUMELEMS+1)
 
 /* BUBBLESORT BENCHMARK PROGRAM:
@@ -26,9 +34,9 @@
 int Array[MAXDIM], Seed;
 int factor;
 
+void BubbleSort(int[]);
 
-Initialize(Array)
-int Array[];
+void Initialize(int Array[])
 /*
  * Initializes given array with randomly generated integers.
  */
@@ -48,8 +56,7 @@ for (Index = 1; Index <= NUMELEMS; Index ++)
 
 
 
-BubbleSort(Array)
-int Array[];
+void BubbleSort(int Array[])
 /*
  * Sorts an array of integers of size NUMELEMS in ascending order.
  */

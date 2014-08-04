@@ -1,0 +1,9 @@
+bitfields.o: ../../../src/gdb-bitfields/bitfields.c \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

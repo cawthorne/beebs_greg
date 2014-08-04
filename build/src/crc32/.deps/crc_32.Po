@@ -1,0 +1,11 @@
+crc_32.o: ../../../src/crc32/crc_32.c ../../../src/crc32/crc.h \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../src/crc32/crc.h:
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

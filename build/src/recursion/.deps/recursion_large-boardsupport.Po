@@ -1,0 +1,10 @@
+recursion_large-boardsupport.o: \
+ ../../../config/arm/boards/stm32f0discovery/boardsupport.c \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

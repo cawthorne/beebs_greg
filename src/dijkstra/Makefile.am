@@ -19,10 +19,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=dijkstra
-dijkstra_SOURCES=dijkstra_small.c
+bin_PROGRAMS=dijkstra dijkstra_large dijkstra_small
+dijkstra_SOURCES=dijkstra.c
+
 EXTRA_DIST = LICENSE
+
+dijkstra_large_SOURCES=dijkstra.c
+dijkstra_small_SOURCES=dijkstra.c
 
 include $(top_srcdir)/src/common.mk.am
 
 dijkstra_SOURCES += ${platform_src}
+
+dijkstra_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+dijkstra_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+dijkstra_large_SOURCES += ${platform_src}
+dijkstra_small_SOURCES += ${platform_src}

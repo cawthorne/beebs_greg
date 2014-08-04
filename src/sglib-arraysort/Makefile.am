@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=sglib-arraysort
-sglib_arraysort_SOURCES=arraysort.c sglib.h
+bin_PROGRAMS=sglib-arraysort sglib-arraysort_large sglib-arraysort_small
+sglib-arraysort_SOURCES=arraysort.c sglib.h
+sglib-arraysort_large_SOURCES=arraysort.c sglib.h
+sglib-arraysort_small_SOURCES=arraysort.c sglib.h
 
 include $(top_srcdir)/src/common.mk.am
 
-sglib_arraysort_SOURCES += ${platform_src}
+sglib-arraysort_SOURCES += ${platform_src}
+
+sglib-arraysort_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+sglib-arraysort_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+sglib-arraysort_large_SOURCES += ${platform_src}
+sglib-arraysort_small_SOURCES += ${platform_src}

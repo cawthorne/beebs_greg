@@ -1,0 +1,9 @@
+2dfir_small-fir2dim.o: ../../../src/2dfir/fir2dim.c \
+ ../../../include/support.h ../../config.h \
+ ../../../config/arm/chips/stm32f051/chipsupport.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "blowfish.h"
-#include "support.h"
+//#include "support.h"
 
 char *ckey= "ABCDEF1234567890";
 BF_KEY key;
@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
    initialise_board();
    start_trigger();
 
-   for(n = 0; n < REPEAT_FACTOR>>11; ++n)
-   {
+   //for(n = 0; n < REPEAT_FACTOR>>11; ++n)
+   //{
       encordec = 1;
       num=0;
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
          i=0;
       }
-   }
+   //}
 
    stop_trigger();
 

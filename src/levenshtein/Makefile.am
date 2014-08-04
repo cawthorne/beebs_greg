@@ -20,9 +20,18 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=levenshtein
+bin_PROGRAMS=levenshtein levenshtein_large levenshtein_small
 levenshtein_SOURCES=levenshtein.c
+levenshtein_large_SOURCES=levenshtein.c
+levenshtein_small_SOURCES=levenshtein.c
 
 include $(top_srcdir)/src/common.mk.am
 
 levenshtein_SOURCES += ${platform_src}
+
+
+levenshtein_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+levenshtein_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+levenshtein_large_SOURCES += ${platform_src}
+levenshtein_small_SOURCES += ${platform_src}

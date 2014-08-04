@@ -51,12 +51,20 @@
  *                      $Date: 1995/04/12 06:23:50 $
  *                      $Revision: 1.3 $
  */
-
+//#include <stdio.h>
 #include "support.h"
 
 #define STORAGE_CLASS register
 #define TYPE          float
-#define IMAGEDIM      4
+#ifdef SMALL_D
+   #define IMAGEDIM      2
+#elif defined(LARGE_D)
+   #define IMAGEDIM      10
+#else
+   //medium
+   #define IMAGEDIM      5
+#endif
+
 #define ARRAYDIM      (IMAGEDIM + 2)
 #define COEFFICIENTS  3
 
@@ -67,8 +75,14 @@ int main()
    static TYPE  array[ARRAYDIM*ARRAYDIM] ={0} ;
    static TYPE  output[IMAGEDIM*IMAGEDIM] ={0};
 
-   static TYPE  check_output[IMAGEDIM*IMAGEDIM] =
-   {4, 6, 6, 4, 6, 9, 9, 6, 6, 9, 9, 6, 4, 6, 6, 4};
+   
+   #ifdef SMALL_D
+      static TYPE  check_output[IMAGEDIM*IMAGEDIM] = {4, 4, 4, 4};
+   #elif defined(LARGE_D)
+      static TYPE  check_output[IMAGEDIM*IMAGEDIM] = {4, 6, 6, 6, 6, 6, 6, 6, 6, 4, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 6, 4, 6, 6, 6, 6, 6, 6, 6, 6, 4};
+    #else
+      static TYPE  check_output[IMAGEDIM*IMAGEDIM] = {4, 6, 6, 6, 4, 6, 9, 9, 9, 6, 6, 9, 9, 9, 6, 6, 9, 9, 9, 6, 4, 6, 6, 6, 4};
+   #endif
 
    STORAGE_CLASS TYPE *parray  = &array[0], *parray2, *parray3 ;
    STORAGE_CLASS TYPE *pcoeff  = &coefficients[0] ;

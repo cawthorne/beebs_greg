@@ -77,7 +77,7 @@ int fib(int n)
 
     Fnew = 1;  Fold = 0;
     for ( i = 2;
-	  i <= 30 && i <= n;          /* apsim_loop 1 0 */
+	  i <= 100 && i <= n;          /* apsim_loop 1 0 */
 	  i++ )
     {
       temp = Fnew;
@@ -92,7 +92,16 @@ int benchmark()
 {
   int a;
 
-  a = 30;
+  //Slect the size of the data
+  #ifdef SMALL_D
+    a= 10;
+  #elif defined(LARGE_D)
+    a= 100;
+  #else
+    //medium
+    a= 35;
+  #endif
+
   fib(a);
   return a;
 }

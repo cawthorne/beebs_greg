@@ -1,0 +1,27 @@
+des.o: ../../../src/nettle-des/des.c ../../../include/support.h \
+ ../../config.h ../../../config/arm/chips/stm32f051/chipsupport.h \
+ /usr/lib/gcc/arm-none-eabi/4.8.2/include/stdint.h \
+ /usr/include/newlib/stdint.h \
+ /usr/include/newlib/machine/_default_types.h \
+ /usr/include/newlib/sys/features.h ../../../src/nettle-des/desCode.h \
+ ../../../src/nettle-des/keymap.h ../../../src/nettle-des/rotors.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:
+
+/usr/lib/gcc/arm-none-eabi/4.8.2/include/stdint.h:
+
+/usr/include/newlib/stdint.h:
+
+/usr/include/newlib/machine/_default_types.h:
+
+/usr/include/newlib/sys/features.h:
+
+../../../src/nettle-des/desCode.h:
+
+../../../src/nettle-des/keymap.h:
+
+../../../src/nettle-des/rotors.h:

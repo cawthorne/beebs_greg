@@ -1,0 +1,20 @@
+md5.o: ../../../src/nettle-md5/md5.c ../../../include/support.h \
+ ../../config.h ../../../config/arm/chips/stm32f051/chipsupport.h \
+ /usr/lib/gcc/arm-none-eabi/4.8.2/include/stdint.h \
+ /usr/include/newlib/stdint.h \
+ /usr/include/newlib/machine/_default_types.h \
+ /usr/include/newlib/sys/features.h
+
+../../../include/support.h:
+
+../../config.h:
+
+../../../config/arm/chips/stm32f051/chipsupport.h:
+
+/usr/lib/gcc/arm-none-eabi/4.8.2/include/stdint.h:
+
+/usr/include/newlib/stdint.h:
+
+/usr/include/newlib/machine/_default_types.h:
+
+/usr/include/newlib/sys/features.h:

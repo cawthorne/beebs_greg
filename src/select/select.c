@@ -29,10 +29,28 @@
 
 #define SWAP(a,b) temp=(a);(a)=(b);(b)=temp;
 
-float arr[20] = {
+// Alter list size to selected data size
+#ifdef SMALL_D
+  #define NUMELEMS 10
+#elif defined(LARGE_D)
+  #define NUMELEMS 50
+#else
+  //medium
+  #define NUMELEMS 20
+#endif
+
+#ifdef SMALL_D
+  float arr[NUMELEMS] = {
+  5, 10.3, 5.7, 49.5,
+  10, 222.22, 101, 77, 99.99, 888.88};
+#elif defined(LARGE_D)
+  float arr[NUMELEMS] = {330.94, 498.84, 35.09, 999.87, 988.45, 265.21, 436.26, 551.63, 386.56, 788.25, 109.0, 376.9, 576.45, 332.34, 238.83, 556.5, 355.87, 305.3, 71.39, 493.5, 320.77, 359.52, 435.55, 345.59, 184.16, 462.92, 783.49, 229.99, 776.95, 774.81, 325.24, 358.73, 447.75, 346.39, 715.28, 149.8, 286.08, 506.3, 534.61, 403.78, 708.08, 288.85, 504.28, 835.54, 464.28, 415.88, 965.0, 607.28, 55.47, 152.55};
+#else
+  //medium
+  float arr[NUMELEMS] = {
   5, 4, 10.3, 1.1, 5.7, 100, 231, 111, 49.5, 99,
-  10, 150, 222.22, 101, 77, 44, 35, 20.54, 99.99, 888.88
-};
+  10, 150, 222.22, 101, 77, 44, 35, 20.54, 99.99, 888.88};
+#endif
 
 
 float select(unsigned long k, unsigned long n)

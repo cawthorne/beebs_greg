@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=recursion
+bin_PROGRAMS=recursion recursion_large recursion_small
 recursion_SOURCES=recursion.c
+recursion_large_SOURCES=recursion.c
+recursion_small_SOURCES=recursion.c
 
 include $(top_srcdir)/src/common.mk.am
 
 recursion_SOURCES += ${platform_src}
+
+recursion_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+recursion_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+recursion_large_SOURCES += ${platform_src}
+recursion_small_SOURCES += ${platform_src}

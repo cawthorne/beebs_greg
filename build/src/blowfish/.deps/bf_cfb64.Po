@@ -1,0 +1,6 @@
+bf_cfb64.o: ../../../src/blowfish/bf_cfb64.c \
+ ../../../src/blowfish/blowfish.h ../../../src/blowfish/bf_locl.h
+
+../../../src/blowfish/blowfish.h:
+
+../../../src/blowfish/bf_locl.h:

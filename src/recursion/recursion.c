@@ -33,7 +33,15 @@
 
  * how it can be modeled in the scope graph.      */
 
-
+// Alter depth of the recursion to selected data size
+#ifdef SMALL_D
+  #define REC_DEPTH 5
+#elif defined(LARGE_D)
+  #define REC_DEPTH 15
+#else
+  //medium
+  #define REC_DEPTH 10
+#endif
 
 /* self-recursion  */
 
@@ -101,7 +109,7 @@ void benchmark(void)
 
 {
 
-  In = fib(10);
+  In = fib(REC_DEPTH);
 
 }
 

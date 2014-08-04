@@ -20,9 +20,19 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=sqrt
+bin_PROGRAMS=sqrt sqrt_large sqrt_small
 sqrt_SOURCES=sqrt.c
+sqrt_large_SOURCES=sqrt.c
+sqrt_small_SOURCES=sqrt.c
 
 include $(top_srcdir)/src/common.mk.am
 
 sqrt_SOURCES += ${platform_src}
+
+
+sqrt_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+sqrt_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+sqrt_large_SOURCES += ${platform_src}
+sqrt_small_SOURCES += ${platform_src}
+

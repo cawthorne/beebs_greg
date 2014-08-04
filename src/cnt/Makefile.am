@@ -21,9 +21,18 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-bin_PROGRAMS=cnt
+bin_PROGRAMS=cnt cnt_large cnt_small
 cnt_SOURCES=cnt.c
+cnt_large_SOURCES=cnt.c
+cnt_small_SOURCES=cnt.c
 
 include $(top_srcdir)/src/common.mk.am
 
 cnt_SOURCES += ${platform_src}
+
+cnt_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+cnt_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+
+cnt_large_SOURCES += ${platform_src}
+cnt_small_SOURCES += ${platform_src}

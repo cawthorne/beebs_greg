@@ -20,9 +20,18 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=bubblesort
+bin_PROGRAMS=bubblesort bubblesort_large bubblesort_small
 bubblesort_SOURCES=bubblesort.c
+
+bubblesort_large_SOURCES=bubblesort.c
+bubblesort_small_SOURCES=bubblesort.c
 
 include $(top_srcdir)/src/common.mk.am
 
 bubblesort_SOURCES += ${platform_src}
+
+bubblesort_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+bubblesort_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+bubblesort_large_SOURCES += ${platform_src}
+bubblesort_small_SOURCES += ${platform_src}

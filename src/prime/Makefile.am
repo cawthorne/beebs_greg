@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=prime
+bin_PROGRAMS=prime prime_large prime_small
 prime_SOURCES=prime.c
+prime_large_SOURCES=prime.c
+prime_small_SOURCES=prime.c
 
 include $(top_srcdir)/src/common.mk.am
 
 prime_SOURCES += ${platform_src}
+
+prime_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+prime_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)
+
+prime_large_SOURCES += ${platform_src}
+prime_small_SOURCES += ${platform_src}

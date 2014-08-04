@@ -100,8 +100,19 @@
 */
 
 
+// Alter list size to selected data size
+#ifdef SMALL_D
+  #define NUMELEMS 8
+#elif defined(LARGE_D)
+  #define NUMELEMS 30
+#else
+  //medium
+  #define NUMELEMS 15
+#endif
 
-long int a[20][20], b[20], x[20];
+#define QUARTER (int)(NUMELEMS*0.25 + 0.5) // is a quarter of the length of the array
+
+long int a[NUMELEMS][NUMELEMS], b[NUMELEMS], x[NUMELEMS];
 
 int ludcmp(int nmax, int n);
 
@@ -117,7 +128,7 @@ int ludcmp(int nmax, int n);
 
 void benchmark()
 {
-  int      i, j, nmax = 20, n = 5, chkerr;
+  int      i, j, nmax = NUMELEMS, n = QUARTER, chkerr;
   long int /* eps, */ w;
 
   /* eps = 1.0e-6; */

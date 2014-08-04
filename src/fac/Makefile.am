@@ -20,9 +20,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-bin_PROGRAMS=fac
+bin_PROGRAMS=fac fac_large fac_small
 fac_SOURCES=fac.c
+fac_large_SOURCES=fac.c
+fac_small_SOURCES=fac.c
 
 include $(top_srcdir)/src/common.mk.am
 
 fac_SOURCES += ${platform_src}
+
+fac_large_SOURCES += ${platform_src}
+fac_small_SOURCES += ${platform_src}
+
+fac_large_CFLAGS=-DLARGE_D $(AM_CFLAGS)
+fac_small_CFLAGS=-DSMALL_D $(AM_CFLAGS)

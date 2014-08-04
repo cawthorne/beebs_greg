@@ -26,3 +26,5 @@ bs_SOURCES=bs.c
 include $(top_srcdir)/src/common.mk.am
 
 bs_SOURCES += ${platform_src}
+
+

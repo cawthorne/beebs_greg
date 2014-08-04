@@ -26,7 +26,7 @@
 
 /* This scale factor will be changed to equalise the runtime of the
    benchmarks. */
-#define SCALE_FACTOR    (REPEAT_FACTOR >> 0)
+#define SCALE_FACTOR    (REPEAT_FACTOR >> 2)
 
 #include <stdio.h>
 #include <ctype.h>
@@ -452,7 +452,13 @@ int slre_match(const char *regexp, const char *s, int s_len,
   return foo(regexp, strlen(regexp), s, s_len, &info);
 }
 
-unsigned char *text = "abbbababaabccababcacbcbcbabbabcbabcabcbbcbbac";
+#ifdef SMALL_D
+  unsigned char *text = "cbabbabcbabcabcbac";
+#elif defined(LARGE_D)
+  unsigned char *text = "abbbababaabccababcacbcbcbabcbabacaccccacabcbccbcabaccacacacacbacbabacacbcccacaaccacacbacabcacbacbacabcacbacbacbbabcbabcabcbbcbbac";
+#else
+    unsigned char *text = "abbbababaabccababcacbcbcbabbabcbabcabcbbcbbac";
+#endif
 unsigned char *regexes[] = {"(ab)+", "(b.+)+", "a[ab]*", "([ab^c][ab^c])+"};
 
 int benchmark()
